@@ -2,6 +2,7 @@ package br.com.fiap.postech.customermanagement.application.exception.custom;
 
 
 import br.com.fiap.postech.customermanagement.application.exception.ApiErrorResponse;
+import org.springframework.http.HttpStatus;
 
 public class InvalidInputException extends RuntimeException implements ApiErrorResponse {
 
@@ -21,6 +22,6 @@ public class InvalidInputException extends RuntimeException implements ApiErrorR
 
     @Override
     public int getStatus() {
-        return 400;
+        return HttpStatus.BAD_REQUEST.value();
     }
 }

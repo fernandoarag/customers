@@ -2,9 +2,7 @@ package br.com.fiap.postech.customermanagement.application.exception.handlers;
 
 import br.com.fiap.postech.customermanagement.application.exception.ApiErrorResponseImpl;
 import br.com.fiap.postech.customermanagement.application.exception.ErrorType;
-import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerAlreadyExistsException;
-import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerEmailCannotBeChangedException;
-import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerNotFoundException;
+import br.com.fiap.postech.customermanagement.application.exception.custom.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -14,8 +12,8 @@ public class DatabaseExceptionHandler {
 
     public ApiErrorResponseImpl handleCustomerNotFoundException(CustomerNotFoundException e) {
         return new ApiErrorResponseImpl(
-                ErrorType.CUSTOMER_NOT_FOUND.name(),
-                ErrorType.CUSTOMER_NOT_FOUND.getTitle(),
+                ErrorType.NOT_FOUND.name(),
+                ErrorType.NOT_FOUND.getTitle(),
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage()
         );
@@ -23,18 +21,36 @@ public class DatabaseExceptionHandler {
 
     public ApiErrorResponseImpl handleCustomerAlreadyExistsException(CustomerAlreadyExistsException e) {
         return new ApiErrorResponseImpl(
-                ErrorType.CUSTOMER_EMAIL_CANNOT_BE_CHANGED.name(),
-                ErrorType.CUSTOMER_EMAIL_CANNOT_BE_CHANGED.getTitle(),
+                ErrorType.EMAIL_CANNOT_BE_CHANGED.name(),
+                ErrorType.EMAIL_CANNOT_BE_CHANGED.getTitle(),
                 HttpStatus.CONFLICT.value(),
+                e.getMessage()
+        );
+    }
+
+    public ApiErrorResponseImpl handleCustomerEmailCannotBeBlankException(CustomerEmailCannotBeBlankException e) {
+        return new ApiErrorResponseImpl(
+                ErrorType.INVALID_JSON.name(),
+                ErrorType.INVALID_JSON.getTitle(),
+                HttpStatus.NOT_ACCEPTABLE.value(),
                 e.getMessage()
         );
     }
 
     public ApiErrorResponseImpl handleCustomerEmailCannotBeChangedException(CustomerEmailCannotBeChangedException e) {
         return new ApiErrorResponseImpl(
-                ErrorType.CUSTOMER_EMAIL_CANNOT_BE_CHANGED.name(),
-                ErrorType.CUSTOMER_EMAIL_CANNOT_BE_CHANGED.getTitle(),
+                ErrorType.EMAIL_CANNOT_BE_CHANGED.name(),
+                ErrorType.EMAIL_CANNOT_BE_CHANGED.getTitle(),
                 HttpStatus.CONFLICT.value(),
+                e.getMessage()
+        );
+    }
+
+    public ApiErrorResponseImpl handleCustomerEmailInvalidException(CustomerEmailInvalidException e) {
+        return new ApiErrorResponseImpl(
+                ErrorType.INVALID_JSON.name(),
+                ErrorType.INVALID_JSON.getTitle(),
+                HttpStatus.NOT_ACCEPTABLE.value(),
                 e.getMessage()
         );
     }

@@ -8,9 +8,9 @@ public enum ErrorType {
     INTERNAL_SERVER_ERROR("Internal Server Error"),
     INVALID_JSON("Invalid Request Body"),
     INVALID_INPUT("Invalid Input"),
-    CUSTOMER_ALREADY_EXISTS("Customer Already Exists"),
-    CUSTOMER_EMAIL_CANNOT_BE_CHANGED("Customer Email Cannot Be Changed"),
-    CUSTOMER_NOT_FOUND("Customer Not Found");
+    ALREADY_EXISTS("Customer Already Exists"),
+    EMAIL_CANNOT_BE_CHANGED("Email Cannot Be Changed"),
+    NOT_FOUND("Customer Not Found");
 
     private final String title;
 
