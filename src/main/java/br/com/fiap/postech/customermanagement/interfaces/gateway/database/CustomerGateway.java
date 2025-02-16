@@ -1,8 +1,8 @@
-package br.com.fiap.postech.customermanagement.application.gateway;
+package br.com.fiap.postech.customermanagement.interfaces.gateway.database;
 
 
 import br.com.fiap.postech.customermanagement.domain.model.Customer;
-import br.com.fiap.postech.customermanagement.application.gateway.database.jpa.repository.filter.CustomerFilter;
+import br.com.fiap.postech.customermanagement.infrastructure.repository.filter.CustomerFilter;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +16,6 @@ public interface CustomerGateway {
     Optional<Customer> findById(final Long id); // Busca cliente por ID
 
     Optional<Customer> findCustomerEntityByEmail(final String email);
-
-    void validCustomerAlreadyExistsEmail(String email);
 
     void deleteById(final Long id); // Deleta um cliente pelo ID
 

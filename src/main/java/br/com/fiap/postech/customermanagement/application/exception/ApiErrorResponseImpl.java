@@ -1,6 +1,7 @@
 package br.com.fiap.postech.customermanagement.application.exception;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
@@ -19,4 +20,5 @@ public class ApiErrorResponseImpl implements ApiErrorResponse {
         this.detail = detail;
         this.timestamp = LocalDateTime.now();
     }
+
 }

@@ -1,4 +1,4 @@
-package br.com.fiap.postech.customermanagement.application.gateway.database.jpa.entity;
+package br.com.fiap.postech.customermanagement.infrastructure.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

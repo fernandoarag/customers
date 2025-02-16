@@ -1,5 +1,7 @@
 package br.com.fiap.postech.customermanagement.domain.model;
 
+import java.util.regex.Pattern;
+
 public class Customer {
 
     private Long id;
@@ -17,6 +19,21 @@ public class Customer {
 
     public Customer(Long id, String name, String email, String phone, String cellPhone, String zipCode, String address, String addressNumber, String neighborhood, String city, String state, String complement) {
         this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.cellPhone = cellPhone;
+        this.zipCode = zipCode;
+        this.address = address;
+        this.addressNumber = addressNumber;
+        this.neighborhood = neighborhood;
+        this.city = city;
+        this.state = state;
+        this.complement = complement;
+    }
+
+    public Customer(String name, String email, String phone, String cellPhone, String zipCode, String address, String addressNumber, String neighborhood, String city, String state, String complement) {
+        this.id = null;
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -127,6 +144,11 @@ public class Customer {
 
     public void setComplement(String complement) {
         this.complement = complement;
+    }
+
+    public static boolean isEmailValid(String email) {
+        final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
+        return EMAIL_REGEX.matcher(email).matches();
     }
 }
 

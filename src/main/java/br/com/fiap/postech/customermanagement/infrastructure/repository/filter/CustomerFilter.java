@@ -1,4 +1,4 @@
-package br.com.fiap.postech.customermanagement.application.gateway.database.jpa.repository.filter;
+package br.com.fiap.postech.customermanagement.infrastructure.repository.filter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,4 +19,7 @@ public class CustomerFilter {
     private String city; // Cidade de residência
     private String state; // Estado de residência
 
+    public CustomerFilter(Long id) {
+        this.id = id;
+    }
 }

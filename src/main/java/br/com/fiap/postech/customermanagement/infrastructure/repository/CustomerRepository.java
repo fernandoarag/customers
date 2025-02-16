@@ -1,7 +1,7 @@
-package br.com.fiap.postech.customermanagement.application.gateway.database.jpa.repository;
+package br.com.fiap.postech.customermanagement.infrastructure.repository;
 
-import br.com.fiap.postech.customermanagement.application.gateway.database.jpa.entity.CustomerEntity;
-import br.com.fiap.postech.customermanagement.application.gateway.database.jpa.repository.filter.CustomersRepositoryQuery;
+import br.com.fiap.postech.customermanagement.infrastructure.entity.CustomerEntity;
+import br.com.fiap.postech.customermanagement.infrastructure.repository.filter.CustomersRepositoryQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,10 +1,7 @@
 package br.com.fiap.postech.customermanagement.application.exception.handlers;
 
 import br.com.fiap.postech.customermanagement.application.exception.ApiErrorResponseImpl;
-import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerAlreadyExistsException;
-import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerEmailCannotBeChangedException;
-import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerNotFoundException;
-import br.com.fiap.postech.customermanagement.application.exception.custom.InvalidInputException;
+import br.com.fiap.postech.customermanagement.application.exception.custom.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,6 +32,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CustomerEmailCannotBeChangedException.class)
     public ApiErrorResponseImpl handleCustomerEmailCannotBeChangedException(CustomerEmailCannotBeChangedException e) {
         return databaseExceptionHandler.handleCustomerEmailCannotBeChangedException(e);
+    }
+
+    @ExceptionHandler(CustomerEmailCannotBeBlankException.class)
+    public ApiErrorResponseImpl handleCustomerEmailCannotBeBlankException(CustomerEmailCannotBeBlankException e) {
+        return databaseExceptionHandler.handleCustomerEmailCannotBeBlankException(e);
+    }
+
+    @ExceptionHandler(CustomerEmailInvalidException.class)
+    public ApiErrorResponseImpl handleCustomerEmailInvalidException(CustomerEmailInvalidException e) {
+        return databaseExceptionHandler.handleCustomerEmailInvalidException(e);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

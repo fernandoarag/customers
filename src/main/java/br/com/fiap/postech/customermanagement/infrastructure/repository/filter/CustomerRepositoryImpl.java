@@ -1,7 +1,7 @@
-package br.com.fiap.postech.customermanagement.application.gateway.database.jpa.repository.filter;
+package br.com.fiap.postech.customermanagement.infrastructure.repository.filter;
 
-import br.com.fiap.postech.customermanagement.application.gateway.database.jpa.entity.CustomerEntity;
-import br.com.fiap.postech.customermanagement.application.gateway.database.jpa.entity.CustomerEntity_;
+import br.com.fiap.postech.customermanagement.infrastructure.entity.CustomerEntity;
+import br.com.fiap.postech.customermanagement.infrastructure.entity.CustomerEntity_;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
