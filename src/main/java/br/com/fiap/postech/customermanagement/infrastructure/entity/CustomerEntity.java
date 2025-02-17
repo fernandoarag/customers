@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity class representing a customer.
+ */
 @Entity(name = "Customers")
 @Table(name = "CUSTOMERS")
 @Data
@@ -15,32 +18,78 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CustomerEntity {
 
+    /**
+     * Unique identifier for the customer.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true, updatable = false)
-    private Long id; // Identificador único no banco de dados
+    private Long id;
+
+    /**
+     * Name of the customer.
+     */
     @Column
-    private String name; // Nome do cliente
+    private String name;
+
+    /**
+     * Email address of the customer.
+     */
     @Email
     @Column(nullable = false, unique = true, updatable = false)
-    private String email;  // Email do cliente
-    @Column
-    private String phone; // Telefone do cliente
-    @Column
-    private String cellPhone; // Telefone do cliente
-    @Column
-    private String zipCode; // Código da residência
-    @Column
-    private String address; // Rua da residência
-    @Column
-    private String addressNumber; // Número da residência
-    @Column
-    private String neighborhood; // Bairro da residência
-    @Column
-    private String city; // Cidade de residência
-    @Column
-    private String state; // Estado de residência
-    @Column
-    private String complement; // Complemento da residência
+    private String email;
 
+    /**
+     * Phone number of the customer.
+     */
+    @Column
+    private String phone;
+
+    /**
+     * Cell phone number of the customer.
+     */
+    @Column
+    private String cellPhone;
+
+    /**
+     * Zip code of the customer's address.
+     */
+    @Column
+    private String zipCode;
+
+    /**
+     * Address of the customer.
+     */
+    @Column
+    private String address;
+
+    /**
+     * Address number of the customer.
+     */
+    @Column
+    private String addressNumber;
+
+    /**
+     * Neighborhood of the customer's address.
+     */
+    @Column
+    private String neighborhood;
+
+    /**
+     * City of the customer's address.
+     */
+    @Column
+    private String city;
+
+    /**
+     * State of the customer's address.
+     */
+    @Column
+    private String state;
+
+    /**
+     * Additional address information.
+     */
+    @Column
+    private String complement;
 }

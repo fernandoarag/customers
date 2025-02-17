@@ -2,7 +2,6 @@ package br.com.fiap.postech.customermanagement.application.usecases.customer;
 
 import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerAlreadyExistsException;
 import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerEmailCannotBeBlankException;
-import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerEmailInvalidException;
 import br.com.fiap.postech.customermanagement.domain.model.Customer;
 import br.com.fiap.postech.customermanagement.interfaces.gateway.database.CustomerGateway;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,13 +40,6 @@ class CreateCustomerUseCaseImplTest {
         Customer customer = new Customer("John Doe", "", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "City", "State", "Apt 1");
 
         assertThrows(CustomerEmailCannotBeBlankException.class, () -> createCustomerUseCase.execute(customer));
-    }
-
-    @Test
-    void shouldThrowExceptionWhenEmailIsInvalid() {
-        Customer customer = new Customer("John Doe", "invalid-email", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "City", "State", "Apt 1");
-
-        assertThrows(CustomerEmailInvalidException.class, () -> createCustomerUseCase.execute(customer));
     }
 
     @Test

@@ -5,8 +5,14 @@ import br.com.fiap.postech.customermanagement.application.exception.ErrorType;
 import br.com.fiap.postech.customermanagement.application.exception.custom.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.MethodParameter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -16,10 +22,11 @@ class GlobalExceptionHandlerTest {
 
     private DatabaseExceptionHandler databaseExceptionHandler;
     private GlobalExceptionHandler globalExceptionHandler;
+    private InterfaceExceptionHandler interfaceExceptionHandler;
 
     @BeforeEach
     void setUp() {
-        InterfaceExceptionHandler interfaceExceptionHandler = mock(InterfaceExceptionHandler.class);
+        interfaceExceptionHandler = mock(InterfaceExceptionHandler.class);
         databaseExceptionHandler = mock(DatabaseExceptionHandler.class);
         globalExceptionHandler = new GlobalExceptionHandler(databaseExceptionHandler, interfaceExceptionHandler);
     }
@@ -155,6 +162,48 @@ class GlobalExceptionHandlerTest {
         assertEquals(expectedResponse.getTitle(), response.getTitle());
         assertEquals(expectedResponse.getStatus(), response.getStatus());
         assertEquals(expectedResponse.getDetail(), exception.getMessage());
+    }
+
+    @Test
+    void handleMethodArgumentNotValidExceptionReturnsApiErrorResponse() {
+        BindingResult bindingResult = mock(BindingResult.class);
+        MethodArgumentNotValidException exception = new MethodArgumentNotValidException(null, bindingResult);
+        ApiErrorResponseImpl expectedResponse = new ApiErrorResponseImpl(
+                ErrorType.INVALID_JSON.name(),
+                ErrorType.INVALID_JSON.getTitle(),
+                400,
+                "Validation failed"
+        );
+
+        when(interfaceExceptionHandler.handleMethodArgumentNotValidException(exception)).thenReturn(expectedResponse);
+
+        ApiErrorResponseImpl response = globalExceptionHandler.handleMethodArgumentNotValidException(exception);
+        assertEquals(expectedResponse.getType(), response.getType());
+        assertEquals(expectedResponse.getTitle(), response.getTitle());
+        assertEquals(expectedResponse.getStatus(), response.getStatus());
+        assertEquals(expectedResponse.getDetail(), response.getDetail());
+    }
+
+    @Test
+    void handleMethodArgumentNotValidExceptionWithFieldErrors() {
+        BindingResult bindingResult = mock(BindingResult.class);
+        FieldError fieldError = new FieldError("objectName", "field", "defaultMessage");
+        when(bindingResult.getFieldErrors()).thenReturn(List.of(fieldError));
+        MethodArgumentNotValidException exception = new MethodArgumentNotValidException(null, bindingResult);
+        ApiErrorResponseImpl expectedResponse = new ApiErrorResponseImpl(
+                ErrorType.INVALID_JSON.name(),
+                ErrorType.INVALID_JSON.getTitle(),
+                400,
+                "Validation failed for field: field, defaultMessage"
+        );
+
+        when(interfaceExceptionHandler.handleMethodArgumentNotValidException(exception)).thenReturn(expectedResponse);
+
+        ApiErrorResponseImpl response = globalExceptionHandler.handleMethodArgumentNotValidException(exception);
+        assertEquals(expectedResponse.getType(), response.getType());
+        assertEquals(expectedResponse.getTitle(), response.getTitle());
+        assertEquals(expectedResponse.getStatus(), response.getStatus());
+        assertEquals(expectedResponse.getDetail(), response.getDetail());
     }
 
 }

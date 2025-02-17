@@ -1,7 +1,8 @@
 package br.com.fiap.postech.customermanagement.domain.model;
 
-import java.util.regex.Pattern;
-
+/**
+ * Represents a customer with personal and contact information.
+ */
 public class Customer {
 
     private Long id;
@@ -17,6 +18,22 @@ public class Customer {
     private String state;
     private String complement;
 
+    /**
+     * Constructs a new Customer with all fields.
+     *
+     * @param id            the unique identifier of the customer
+     * @param name          the name of the customer
+     * @param email         the email address of the customer
+     * @param phone         the phone number of the customer
+     * @param cellPhone     the cell phone number of the customer
+     * @param zipCode       the zip code of the customer's address
+     * @param address       the address of the customer
+     * @param addressNumber the address number of the customer
+     * @param neighborhood  the neighborhood of the customer
+     * @param city          the city of the customer
+     * @param state         the state of the customer
+     * @param complement    additional address information
+     */
     public Customer(Long id, String name, String email, String phone, String cellPhone, String zipCode, String address, String addressNumber, String neighborhood, String city, String state, String complement) {
         this.id = id;
         this.name = name;
@@ -32,6 +49,21 @@ public class Customer {
         this.complement = complement;
     }
 
+    /**
+     * Constructs a new Customer without an ID.
+     *
+     * @param name          the name of the customer
+     * @param email         the email address of the customer
+     * @param phone         the phone number of the customer
+     * @param cellPhone     the cell phone number of the customer
+     * @param zipCode       the zip code of the customer's address
+     * @param address       the address of the customer
+     * @param addressNumber the address number of the customer
+     * @param neighborhood  the neighborhood of the customer
+     * @param city          the city of the customer
+     * @param state         the state of the customer
+     * @param complement    additional address information
+     */
     public Customer(String name, String email, String phone, String cellPhone, String zipCode, String address, String addressNumber, String neighborhood, String city, String state, String complement) {
         this.id = null;
         this.name = name;
@@ -47,8 +79,13 @@ public class Customer {
         this.complement = complement;
     }
 
+    /**
+     * Default constructor.
+     */
     public Customer() {
     }
+
+    // Getters and setters for all fields
 
     public Long getId() {
         return id;
@@ -146,10 +183,26 @@ public class Customer {
         this.complement = complement;
     }
 
-    public static boolean isEmailValid(String email) {
-        final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
-        return EMAIL_REGEX.matcher(email).matches();
+    /**
+     * Updates the current customer with the details of another customer.
+     *
+     * @param customerID the ID of the customer to update
+     * @param customer   the customer object containing updated details
+     */
+    public void update(final Long customerID, final Customer customer) {
+        this.id = customerID;
+        this.name = customer.getName();
+        this.phone = customer.getPhone();
+        this.cellPhone = customer.getCellPhone();
+        this.zipCode = customer.getZipCode();
+        this.address = customer.getAddress();
+        this.addressNumber = customer.getAddressNumber();
+        this.neighborhood = customer.getNeighborhood();
+        this.city = customer.getCity();
+        this.state = customer.getState();
+        this.complement = customer.getComplement();
     }
+
 }
 
 

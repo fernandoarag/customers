@@ -14,18 +14,26 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of custom repository methods for CustomerEntity.
+ */
 public class CustomerRepositoryImpl implements CustomersRepositoryQuery {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
+    /**
+     * Filters customers based on the given CustomerFilter criteria.
+     *
+     * @param customerFilter the filter criteria
+     * @return a list of CustomerEntity that match the filter criteria
+     */
     @Override
     public List<CustomerEntity> filter(CustomerFilter customerFilter) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<CustomerEntity> criteria = builder.createQuery(CustomerEntity.class);
         Root<CustomerEntity> root = criteria.from(CustomerEntity.class);
 
-        // Criar Restrições
         Predicate[] predicates = createRestritions(customerFilter, builder, root);
         criteria.where(predicates);
 
@@ -33,11 +41,19 @@ public class CustomerRepositoryImpl implements CustomersRepositoryQuery {
         return query.getResultList();
     }
 
+    /**
+     * Creates the restrictions (predicates) for the filter criteria.
+     *
+     * @param customerFilter the filter criteria
+     * @param builder        the CriteriaBuilder
+     * @param root           the root type in the from clause
+     * @return an array of Predicate representing the filter criteria
+     */
     private Predicate[] createRestritions(CustomerFilter customerFilter, CriteriaBuilder builder, Root<CustomerEntity> root) {
         List<Predicate> predicates = new ArrayList<>();
 
         if (customerFilter.getId() != null) {
-            predicates.add(builder.equal(root.get(CustomerEntity_.id), customerFilter.getId().toString() ));
+            predicates.add(builder.equal(root.get(CustomerEntity_.id), customerFilter.getId().toString()));
         }
 
         if (StringUtils.isNotBlank(customerFilter.getName())) {

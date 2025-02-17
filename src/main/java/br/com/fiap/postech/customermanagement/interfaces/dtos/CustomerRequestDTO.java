@@ -1,9 +1,11 @@
 package br.com.fiap.postech.customermanagement.interfaces.dtos;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public record CustomerRequestDTO(
-        Long id,
         String name,
-        String email,
+        @NotBlank @Email String email,
         String phone,
         String cellPhone,
         String zipCode,
