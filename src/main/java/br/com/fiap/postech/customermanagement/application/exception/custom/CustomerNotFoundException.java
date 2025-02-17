@@ -9,10 +9,13 @@ import org.springframework.http.HttpStatus;
  */
 public class CustomerNotFoundException extends RuntimeException implements ApiErrorResponse {
 
+    private static final ErrorType type = ErrorType.NOT_FOUND;
+    private static final HttpStatus status = HttpStatus.NOT_FOUND;
+
     /**
      * Constructs a new CustomerNotFoundException with the specified type and type value.
      *
-     * @param type the type of identifier (e.g., "email", "ID")
+     * @param type      the type of identifier (e.g., "email", "ID")
      * @param typeValue the value of the identifier
      */
     public CustomerNotFoundException(final String type, final String typeValue) {
@@ -26,7 +29,7 @@ public class CustomerNotFoundException extends RuntimeException implements ApiEr
      */
     @Override
     public String getType() {
-        return ErrorType.NOT_FOUND.name();
+        return type.name();
     }
 
     /**
@@ -36,7 +39,7 @@ public class CustomerNotFoundException extends RuntimeException implements ApiEr
      */
     @Override
     public String getTitle() {
-        return ErrorType.NOT_FOUND.getTitle();
+        return type.getTitle();
     }
 
     /**
@@ -46,7 +49,7 @@ public class CustomerNotFoundException extends RuntimeException implements ApiEr
      */
     @Override
     public int getStatus() {
-        return HttpStatus.NOT_FOUND.value();
+        return status.value();
     }
 
 }

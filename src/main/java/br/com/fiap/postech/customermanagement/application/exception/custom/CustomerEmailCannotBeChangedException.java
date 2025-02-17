@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
  */
 public class CustomerEmailCannotBeChangedException extends RuntimeException implements ApiErrorResponse {
 
+    private static final ErrorType type = ErrorType.EMAIL_CANNOT_BE_CHANGED;
+    private static final HttpStatus status = HttpStatus.CONFLICT;
+
     /**
      * Constructs a new CustomerEmailCannotBeChangedException with a default message.
      */
@@ -23,7 +26,7 @@ public class CustomerEmailCannotBeChangedException extends RuntimeException impl
      */
     @Override
     public String getType() {
-        return ErrorType.EMAIL_CANNOT_BE_CHANGED.name();
+        return type.name();
     }
 
     /**
@@ -33,7 +36,7 @@ public class CustomerEmailCannotBeChangedException extends RuntimeException impl
      */
     @Override
     public String getTitle() {
-        return ErrorType.EMAIL_CANNOT_BE_CHANGED.getTitle();
+        return type.getTitle();
     }
 
     /**
@@ -43,6 +46,6 @@ public class CustomerEmailCannotBeChangedException extends RuntimeException impl
      */
     @Override
     public int getStatus() {
-        return HttpStatus.CONFLICT.value();
+        return status.value();
     }
 }

@@ -1,4 +1,6 @@
 {
-    "sonarQubeUri": "http://localhost:9000",
-    "projectKey": "customers_api"
+  "sonarQubeUri": "http://localhost:9000",
+  "projectKey": "customers",
+  "organizationKey": "my-org",
+  "projectName": "Customers"
 }

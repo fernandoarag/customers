@@ -14,6 +14,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 @Component
 public class InterfaceExceptionHandler {
 
+    private static final ErrorType INVALID_INPUT = ErrorType.INVALID_INPUT;
+    private static final HttpStatus BAD_REQUEST = HttpStatus.BAD_REQUEST;
+
     /**
      * Handles InvalidInputException.
      *
@@ -22,9 +25,9 @@ public class InterfaceExceptionHandler {
      */
     public ApiErrorResponseImpl handleInvalidInputException(InvalidInputException e) {
         return new ApiErrorResponseImpl(
-                ErrorType.INVALID_INPUT.name(),
-                ErrorType.INVALID_INPUT.getTitle(),
-                HttpStatus.BAD_REQUEST.value(),
+                INVALID_INPUT.name(),
+                INVALID_INPUT.getTitle(),
+                BAD_REQUEST.value(),
                 e.getMessage()
         );
     }
@@ -44,9 +47,9 @@ public class InterfaceExceptionHandler {
                     .append("; ");
         }
         return new ApiErrorResponseImpl(
-                ErrorType.INVALID_INPUT.name(),
-                ErrorType.INVALID_INPUT.getTitle(),
-                HttpStatus.BAD_REQUEST.value(),
+                INVALID_INPUT.name(),
+                INVALID_INPUT.getTitle(),
+                BAD_REQUEST.value(),
                 errorMessage.toString()
         );
     }
