@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
  */
 public class CustomerAlreadyExistsException extends RuntimeException implements ApiErrorResponse {
 
+    private static final ErrorType type = ErrorType.ALREADY_EXISTS;
+    private static final HttpStatus status = HttpStatus.CONFLICT;
+
     /**
      * Constructs a new CustomerAlreadyExistsException with the specified email.
      *
@@ -25,7 +28,7 @@ public class CustomerAlreadyExistsException extends RuntimeException implements 
      */
     @Override
     public String getType() {
-        return ErrorType.ALREADY_EXISTS.name();
+        return type.name();
     }
 
     /**
@@ -35,7 +38,7 @@ public class CustomerAlreadyExistsException extends RuntimeException implements 
      */
     @Override
     public String getTitle() {
-        return ErrorType.ALREADY_EXISTS.getTitle();
+        return type.getTitle();
     }
 
     /**
@@ -45,6 +48,6 @@ public class CustomerAlreadyExistsException extends RuntimeException implements 
      */
     @Override
     public int getStatus() {
-        return HttpStatus.CONFLICT.value();
+        return status.value();
     }
 }

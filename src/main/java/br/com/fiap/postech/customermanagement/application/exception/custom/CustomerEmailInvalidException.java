@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
  */
 public class CustomerEmailInvalidException extends RuntimeException implements ApiErrorResponse {
 
+    private static final ErrorType type = ErrorType.INVALID_JSON;
+    private static final HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
+
     /**
      * Constructs a new CustomerEmailInvalidException with a default message.
      */
@@ -23,7 +26,7 @@ public class CustomerEmailInvalidException extends RuntimeException implements A
      */
     @Override
     public String getType() {
-        return ErrorType.INVALID_JSON.name();
+        return type.name();
     }
 
     /**
@@ -33,7 +36,7 @@ public class CustomerEmailInvalidException extends RuntimeException implements A
      */
     @Override
     public String getTitle() {
-        return ErrorType.INVALID_JSON.getTitle();
+        return type.getTitle();
     }
 
     /**
@@ -43,6 +46,6 @@ public class CustomerEmailInvalidException extends RuntimeException implements A
      */
     @Override
     public int getStatus() {
-        return HttpStatus.NOT_ACCEPTABLE.value();
+        return status.value();
     }
 }
