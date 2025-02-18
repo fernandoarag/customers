@@ -16,13 +16,13 @@ class InvalidInputExceptionTest {
     @Test
     void shouldReturnCorrectErrorType() {
         InvalidInputException exception = new InvalidInputException("Invalid input provided");
-        assertEquals("invalid_input", exception.getType());
+        assertEquals("INVALID_INPUT", exception.getType());
     }
 
     @Test
     void shouldReturnCorrectErrorTitle() {
         InvalidInputException exception = new InvalidInputException("Invalid input provided");
-        assertEquals("Invalid input", exception.getTitle());
+        assertEquals("Invalid Input", exception.getTitle());
     }
 
     @Test

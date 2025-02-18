@@ -1,15 +1,17 @@
 package br.com.fiap.postech.customermanagement.infrastructure.repository.filter;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Filter class for searching customers based on various criteria.
  */
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class CustomerFilter {
 
     /**
@@ -60,9 +62,9 @@ public class CustomerFilter {
     /**
      * Constructor for creating a CustomerFilter with only an ID.
      *
-     * @param id the unique identifier for the customer
+     * @param customerID the unique identifier for the customer
      */
-    public CustomerFilter(Long id) {
-        this.id = id;
+    public CustomerFilter(final Long customerID) {
+        this.id = customerID;
     }
 }

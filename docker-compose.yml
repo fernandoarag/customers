@@ -1,24 +1,18 @@
-#version: '2'
-#services:
-#  db:
-#    image: mysql:5.7
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=root
-#      - MYSQL_DATABASE=projeto_jpa
-#    ports:
-#      - "3306:3306"
-#  maven:
-#    build:
-#      context: dockerfiles
-#      dockerfile: Dockerfile-maven
-#    volumes:
-#      - ~/.m2:/root/.m2
-#      - $PWD:/usr/src/mymaven
-#    volumes_from:
-#      - tomcat
-#  tomcat:
-#    build:
-#      context: dockerfiles
-#      dockerfile: Dockerfile-apache
-#    ports:
-#      - "8888:8080"
+version: "3"
+services:
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+
+  database:
+    image: oscarfonts/h2:latest
+    ports:
+      - 1521:1521
+      - 81:81
+    volumes:
+      - ./h2-data:/h2-data

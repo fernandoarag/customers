@@ -5,7 +5,6 @@ import br.com.fiap.postech.customermanagement.application.exception.ErrorType;
 import br.com.fiap.postech.customermanagement.application.exception.custom.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.MethodParameter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;

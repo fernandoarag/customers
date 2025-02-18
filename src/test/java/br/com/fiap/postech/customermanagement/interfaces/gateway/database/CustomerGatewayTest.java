@@ -1,5 +1,6 @@
 package br.com.fiap.postech.customermanagement.interfaces.gateway.database;
 
+import br.com.fiap.postech.customermanagement.domain.model.Address;
 import br.com.fiap.postech.customermanagement.domain.model.Customer;
 import br.com.fiap.postech.customermanagement.infrastructure.repository.filter.CustomerFilter;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,9 +13,12 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class CustomerGatewayTest {
+
+    private static final Address address = new Address("12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
 
     @Mock
     private CustomerGateway customerGateway;
@@ -26,7 +30,7 @@ class CustomerGatewayTest {
 
     @Test
     void saveCustomerSuccessfully() {
-        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
+        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address);
 
         when(customerGateway.save(customer)).thenReturn(customer);
 
@@ -38,7 +42,7 @@ class CustomerGatewayTest {
     @Test
     void filterReturnsListOfCustomers() {
         CustomerFilter filter = new CustomerFilter();
-        List<Customer> customers = List.of(new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1"));
+        List<Customer> customers = List.of(new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address));
         when(customerGateway.filter(filter)).thenReturn(customers);
 
         List<Customer> result = customerGateway.filter(filter);
@@ -49,7 +53,7 @@ class CustomerGatewayTest {
     @Test
     void findByIdReturnsCustomer() {
         Long id = 1L;
-        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
+        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address);
         when(customerGateway.findById(id)).thenReturn(Optional.of(customer));
 
         Optional<Customer> result = customerGateway.findById(id);
@@ -61,7 +65,7 @@ class CustomerGatewayTest {
     @Test
     void findCustomerEntityByEmailReturnsCustomer() {
         String email = "john.doe@example.com";
-        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
+        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address);
         when(customerGateway.findCustomerEntityByEmail(email)).thenReturn(Optional.of(customer));
 
         Optional<Customer> result = customerGateway.findCustomerEntityByEmail(email);
@@ -74,5 +78,8 @@ class CustomerGatewayTest {
     void deleteByIdSuccessfully() {
         Long id = 1L;
         customerGateway.deleteById(id);
+
+        // Add assertion to verify that deleteById was called
+        verify(customerGateway).deleteById(id);
     }
 }
