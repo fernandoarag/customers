@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Implementation of the CustomerGateway interface using JPA.
@@ -42,7 +41,7 @@ public class CustomerJpaGateway implements CustomerGateway {
      * @return a list of customers matching the filter criteria
      */
     public List<Customer> filter(CustomerFilter customerFilter) {
-        return repository.filter(customerFilter).stream().map(mapper::toDomain).collect(Collectors.toList());
+        return repository.filter(customerFilter).stream().map(mapper::toDomain).toList();
     }
 
     /**

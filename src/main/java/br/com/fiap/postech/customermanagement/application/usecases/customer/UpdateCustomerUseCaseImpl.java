@@ -44,7 +44,7 @@ public class UpdateCustomerUseCaseImpl implements UpdateCustomerUseCase {
                 .findById(customerID)
                 .orElseThrow(() -> new CustomerNotFoundException("id", customerID.toString()));
 
-        customer.update(customerID, customerUpdate);
+        customer.updateCustomerWithoutEmail(customerID, customerUpdate);
 
         return customerGateway.save(customer);
     }

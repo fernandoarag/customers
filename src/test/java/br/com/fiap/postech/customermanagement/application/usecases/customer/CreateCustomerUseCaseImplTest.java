@@ -2,6 +2,7 @@ package br.com.fiap.postech.customermanagement.application.usecases.customer;
 
 import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerAlreadyExistsException;
 import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerEmailCannotBeBlankException;
+import br.com.fiap.postech.customermanagement.domain.model.Address;
 import br.com.fiap.postech.customermanagement.domain.model.Customer;
 import br.com.fiap.postech.customermanagement.interfaces.gateway.database.CustomerGateway;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,8 @@ import static org.mockito.Mockito.*;
 
 class CreateCustomerUseCaseImplTest {
 
+    private static final Address address = new Address("12345", "Main St", "100", "Downtown", "City", "State", "Apt 1");
+
     private CustomerGateway customerGateway;
     private CreateCustomerUseCaseImpl createCustomerUseCase;
 
@@ -26,7 +29,7 @@ class CreateCustomerUseCaseImplTest {
 
     @Test
     void shouldCreateCustomerSuccessfully() {
-        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "City", "State", "Apt 1");
+        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address);
         when(customerGateway.save(customer)).thenReturn(customer);
 
         Customer result = createCustomerUseCase.execute(customer);
@@ -37,14 +40,14 @@ class CreateCustomerUseCaseImplTest {
 
     @Test
     void shouldThrowExceptionWhenEmailIsBlank() {
-        Customer customer = new Customer("John Doe", "", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "City", "State", "Apt 1");
+        Customer customer = new Customer("John Doe", "", "123456789", "987654321", address);
 
         assertThrows(CustomerEmailCannotBeBlankException.class, () -> createCustomerUseCase.execute(customer));
     }
 
     @Test
     void shouldThrowExceptionWhenCustomerAlreadyExists() {
-        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "City", "State", "Apt 1");
+        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address);
         when(customerGateway.findCustomerEntityByEmail(customer.getEmail())).thenReturn(Optional.of(customer));
 
         assertThrows(CustomerAlreadyExistsException.class, () -> createCustomerUseCase.execute(customer));

@@ -1,6 +1,7 @@
 package br.com.fiap.postech.customermanagement.interfaces.gateway.impl;
 
 import br.com.fiap.postech.customermanagement.application.exception.custom.CustomerNotFoundException;
+import br.com.fiap.postech.customermanagement.domain.model.Address;
 import br.com.fiap.postech.customermanagement.domain.model.Customer;
 import br.com.fiap.postech.customermanagement.infrastructure.entity.CustomerEntity;
 import br.com.fiap.postech.customermanagement.infrastructure.mapper.CustomerMapper;
@@ -16,11 +17,11 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CustomerJpaGatewayTest {
 
+    private static final Address address = new Address("12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
 
     @Mock
     private CustomerRepository repository;
@@ -39,7 +40,7 @@ class CustomerJpaGatewayTest {
     @Test
     void saveCustomerSuccessfully() {
         CustomerEntity entity = new CustomerEntity();
-        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
+        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address);
         when(mapper.toEntity(customer)).thenReturn(entity);
         when(repository.save(entity)).thenReturn(entity);
         when(mapper.toDomain(entity)).thenReturn(customer);
@@ -53,7 +54,7 @@ class CustomerJpaGatewayTest {
     void filterReturnsListOfCustomers() {
         CustomerFilter filter = new CustomerFilter();
         List<CustomerEntity> entities = List.of(new CustomerEntity());
-        List<Customer> customers = List.of(new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1"));
+        List<Customer> customers = List.of(new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address));
         when(repository.filter(filter)).thenReturn(entities);
         when(mapper.toDomain(entities.get(0))).thenReturn(customers.get(0));
 
@@ -66,7 +67,7 @@ class CustomerJpaGatewayTest {
     void findByIdReturnsCustomer() {
         Long id = 1L;
         CustomerEntity entity = new CustomerEntity();
-        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
+        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address);
         when(repository.findById(id)).thenReturn(Optional.of(entity));
         when(mapper.toDomain(entity)).thenReturn(customer);
 
@@ -79,7 +80,7 @@ class CustomerJpaGatewayTest {
     void findCustomerEntityByEmailReturnsCustomer() {
         String email = "john.doe@example.com";
         CustomerEntity entity = new CustomerEntity();
-        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
+        Customer customer = new Customer("John Doe", "john.doe@example.com", "123456789", "987654321", address);
         when(repository.findCustomerEntityByEmail(email)).thenReturn(Optional.of(entity));
         when(mapper.toDomain(entity)).thenReturn(customer);
 
@@ -96,6 +97,9 @@ class CustomerJpaGatewayTest {
         doNothing().when(repository).deleteById(id);
 
         customerJpaGateway.deleteById(id);
+
+        // Add assertion to verify that deleteById was called
+        verify(repository).deleteById(id);
     }
 
     @Test

@@ -4,6 +4,7 @@ import br.com.fiap.postech.customermanagement.application.usecases.customer.Crea
 import br.com.fiap.postech.customermanagement.application.usecases.customer.DeleteCustomerUseCase;
 import br.com.fiap.postech.customermanagement.application.usecases.customer.FindCustomerUseCase;
 import br.com.fiap.postech.customermanagement.application.usecases.customer.UpdateCustomerUseCase;
+import br.com.fiap.postech.customermanagement.domain.model.Address;
 import br.com.fiap.postech.customermanagement.domain.model.Customer;
 import br.com.fiap.postech.customermanagement.infrastructure.repository.filter.CustomerFilter;
 import br.com.fiap.postech.customermanagement.interfaces.adapters.CustomerRestAdapter;
@@ -53,7 +54,8 @@ class CustomersControllerTest {
     @Test
     void filterReturnsListOfCustomers() {
         CustomerFilter filter = new CustomerFilter();
-        List<Customer> customers = List.of(new Customer(1L, "John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1"));
+        final Address address = new Address("12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
+        List<Customer> customers = List.of(new Customer(1L, "John Doe", "john.doe@example.com", "123456789", "987654321", address));
         when(findCustomerUseCase.filter(filter)).thenReturn(customers);
         List<CustomerResponseDTO> responseList = customers.stream().map(customerRestAdapter::toResponse).toList();
 
@@ -65,9 +67,10 @@ class CustomersControllerTest {
 
     @Test
     void createCustomerReturnsCreatedCustomer() {
+        final Address address = new Address("12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
         CustomerRequestDTO requestDTO = new CustomerRequestDTO("John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
-        Customer customer = new Customer(null, "John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
-        Customer savedCustomer = new Customer(1L, "John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
+        Customer customer = new Customer(null, "John Doe", "john.doe@example.com", "123456789", "987654321", address);
+        Customer savedCustomer = new Customer(1L, "John Doe", "john.doe@example.com", "123456789", "987654321", address);
         CustomerResponseDTO responseDTO = new CustomerResponseDTO(1L, "John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
 
         when(customerRestAdapter.toDomain(requestDTO)).thenReturn(customer);
@@ -82,11 +85,12 @@ class CustomersControllerTest {
     }
 
     @Test
-    void updateCustomerByIdReturnsUpdatedCustomer() {
+    void updateCustomerWithoutEmailCustomerByIdReturnsUpdatedCustomer() {
         Long id = 1L;
+        final Address address = new Address("12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
         CustomerUpdateRequestDTO requestDTO = new CustomerUpdateRequestDTO("John Doe", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
-        Customer customer = new Customer(id, "John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
-        Customer updatedCustomer = new Customer(id, "John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
+        Customer customer = new Customer(id, "John Doe", "john.doe@example.com", "123456789", "987654321", address);
+        Customer updatedCustomer = new Customer(id, "John Doe", "john.doe@example.com", "123456789", "987654321", address);
         CustomerResponseDTO responseDTO = new CustomerResponseDTO(id, "John Doe", "john.doe@example.com", "123456789", "987654321", "12345", "Main St", "100", "Downtown", "Metropolis", "NY", "Apt 1");
 
         Mockito.when(customerRestAdapter.toDomain(requestDTO)).thenReturn(customer);

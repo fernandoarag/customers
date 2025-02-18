@@ -33,8 +33,7 @@ class DeleteCustomerUseCaseImplTest {
     @Test
     void deleteCustomerByIdSuccessfully() {
         Long customerId = 1L;
-        Customer customer = new Customer();
-        customer.setId(customerId);
+        Customer customer = new Customer(customerId, null, null, null, null, null);
         when(customerGateway.findById(customerId)).thenReturn(Optional.of(customer));
 
         deleteCustomerUseCaseImpl.deleteCustomerById(customerId);
@@ -66,9 +65,7 @@ class DeleteCustomerUseCaseImplTest {
     @Test
     void deleteCustomerByEmailSuccessfully() {
         String email = "test@example.com";
-        Customer customer = new Customer();
-        customer.setId(1L);
-        customer.setEmail(email);
+        Customer customer = new Customer(1L, email, null, null, null, null);
         when(customerGateway.findCustomerEntityByEmail(email)).thenReturn(Optional.of(customer));
 
         deleteCustomerUseCaseImpl.deleteCustomerByEmail(email);

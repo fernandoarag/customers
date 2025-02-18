@@ -31,7 +31,7 @@ class UpdateCustomerUseCaseImplTest {
     }
 
     @Test
-    void updateCustomerByIdSuccessfully() {
+    void updateCustomerWithoutEmailCustomerByIdSuccessfully() {
         Long customerId = 1L;
         Customer customer = new Customer();
         Customer customerUpdate = new Customer();
@@ -45,7 +45,7 @@ class UpdateCustomerUseCaseImplTest {
     }
 
     @Test
-    void updateCustomerByIdThrowsInvalidInputExceptionWhenIdIsNull() {
+    void updateCustomerWithoutEmailCustomerByIdThrowsInvalidInputExceptionWhenIdIsNull() {
         Customer customerUpdate = new Customer();
 
         InvalidInputException exception = assertThrows(InvalidInputException.class, () -> {
@@ -56,7 +56,7 @@ class UpdateCustomerUseCaseImplTest {
     }
 
     @Test
-    void updateCustomerByIdThrowsCustomerNotFoundExceptionWhenCustomerDoesNotExist() {
+    void updateCustomerWithoutEmailCustomerByIdThrowsCustomerNotFoundExceptionWhenCustomerDoesNotExist() {
         Long customerId = 1L;
         Customer customerUpdate = new Customer();
         when(customerGateway.findById(customerId)).thenReturn(Optional.empty());
