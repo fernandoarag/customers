@@ -10,10 +10,16 @@
 			"name": "Create Customer",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-US",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Teste\", \r\n    \"email\": \"6test54e234@teste.com\", \r\n    \"phone\": \"38321385548\", \r\n    \"cell_phone\": \"38998413888\", \r\n    \"zip_code\": \"39401365\", \r\n    \"address\": \"Teste\", \r\n    \"address_number\": \"600\", \r\n    \"neighborhood\": \"Bairro\", \r\n    \"city\": \"Cidade\", \r\n    \"state\": \"Estado\", \r\n    \"complement\": \"Complemento\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Teste\", \r\n    \"email\": \"test3e2com@email\", \r\n    \"phone\": \"3832138548\", \r\n    \"cellPhone\": \"38998413888\", \r\n    \"zipCode\": \"39401365\", \r\n    \"address\": \"Teste\", \r\n    \"addressNumber\": \"600\", \r\n    \"neighborhood\": \"Bairro\", \r\n    \"city\": \"Cidade\", \r\n    \"state\": \"Estado\", \r\n    \"complement\": \"Complemento\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,12 +27,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/customers",
-					"protocol": "http",
+					"raw": "{{customer_management_path}}/customers",
 					"host": [
-						"localhost"
+						"{{customer_management_path}}"
 					],
-					"port": "8080",
 					"path": [
 						"customers"
 					]
@@ -40,20 +44,18 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/customers/:id",
-					"protocol": "http",
+					"raw": "{{customer_management_path}}/id/:id",
 					"host": [
-						"localhost"
+						"{{customer_management_path}}"
 					],
-					"port": "8080",
 					"path": [
-						"customers",
+						"id",
 						":id"
 					],
 					"variable": [
 						{
 							"key": "id",
-							"value": "2"
+							"value": "1"
 						}
 					]
 				}
@@ -66,21 +68,18 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/customers/email/:email",
-					"protocol": "http",
+					"raw": "{{customer_management_path}}/email/:email",
 					"host": [
-						"localhost"
+						"{{customer_management_path}}"
 					],
-					"port": "8080",
 					"path": [
-						"customers",
 						"email",
 						":email"
 					],
 					"variable": [
 						{
 							"key": "email",
-							"value": ""
+							"value": "testecom@email"
 						}
 					]
 				}
@@ -94,7 +93,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Teste\", \r\n    \"phone\": \"3832138asdadadasadasd548\", \r\n    \"cell_phone\": \"38998413888\", \r\n    \"zip_code\": \"39401365\", \r\n    \"address\": \"Teste\", \r\n    \"address_number\": \"600\", \r\n    \"neighborhood\": \"Bairro\", \r\n    \"city\": \"Cidade\", \r\n    \"state\": \"Estado\", \r\n    \"complement\": \"Complemento\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Teste\", \r\n    \"phone\": \"3832138548\", \r\n    \"cellPhone\": \"38998413888\", \r\n    \"zipCode\": \"39401365\", \r\n    \"address\": \"lçkjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj\", \r\n    \"addressNumber\": \"600\", \r\n    \"neighborhood\": \"Bairro\", \r\n    \"city\": \"Cidade\", \r\n    \"state\": \"Estado\", \r\n    \"complement\": \"Complemento\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -102,12 +101,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/customers/:id",
-					"protocol": "http",
+					"raw": "{{customer_management_path}}/customers/:id",
 					"host": [
-						"localhost"
+						"{{customer_management_path}}"
 					],
-					"port": "8080",
 					"path": [
 						"customers",
 						":id"
@@ -128,19 +125,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/customers",
-					"protocol": "http",
+					"raw": "{{customer_management_path}}/customers",
 					"host": [
-						"localhost"
+						"{{customer_management_path}}"
 					],
-					"port": "8080",
 					"path": [
 						"customers"
 					],
 					"query": [
 						{
 							"key": "id",
-							"value": "3",
+							"value": "1",
 							"disabled": true
 						},
 						{
@@ -160,33 +155,62 @@
 						},
 						{
 							"key": "cellPhone",
-							"value": null,
+							"value": "",
 							"disabled": true
 						},
 						{
 							"key": "zipCode",
-							"value": null,
+							"value": "",
 							"disabled": true
 						},
 						{
 							"key": "neighborhood",
-							"value": null,
+							"value": "",
 							"disabled": true
 						},
 						{
 							"key": "city",
-							"value": null,
+							"value": "",
 							"disabled": true
 						},
 						{
 							"key": "state",
-							"value": null,
+							"value": "",
 							"disabled": true
 						}
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "customer_management_path",
+			"value": "http://localhost:8080/api/customermanagement/v1",
+			"type": "string"
 		}
 	]
 }
