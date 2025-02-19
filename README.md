@@ -63,27 +63,37 @@ A aplicação estará disponível em http://localhost:8080/api/customermanagemen
 ### Gerenciamento de Produtos
 
 **GET** _/customers_: Retorna todos os clientes cadastrados.
-- **Parâmetros**:
-  - **`(CustomerFilter)`**:
+- **Parâmetros (não obrigatório)**: <br>
+  **`(CustomerFilter)`**:
     ```json
-      {
-        "id": "Long",
-        "name": "String",
-        "email": "String",
-        "phone": "String",
-        "cellPhone": "String",
-        "zipCode": "String",
-        "neighborhood": "String",
-        "city": "String",
-        "state": "String"
-      }
+    {
+      "id": "Long",
+      "name": "String",
+      "email": "String",
+      "phone": "String",
+      "cellPhone": "String",
+      "zipCode": "String",
+      "neighborhood": "String",
+      "city": "String",
+      "state": "String"
+    }
     ```
-- **200 OK**: Lista de clientes.
-- **500 Internal Server Error**: Erro interno do servidor.
-
-**POST** _/customers_: Cria um novo cliente.
-- **Body**: `(CustomerRequestDTO)`:
+- **200 OK**: Lista de clientes **(CustomerResponseDTO)**:
   ```json
+  [
+    {
+      "name": "String",
+      "email": "String",
+      "phone": "String",
+      "cellPhone": "String",
+      "zipCode": "String",
+      "address": "String",
+      "addressNumber": "String",
+      "neighborhood": "String",
+      "city": "String",
+      "state": "String",
+      "complement": "String"
+    },
     {
       "name": "String",
       "email": "String",
@@ -97,6 +107,26 @@ A aplicação estará disponível em http://localhost:8080/api/customermanagemen
       "state": "String",
       "complement": "String"
     }
+  ]
+  ```
+- **500 Internal Server Error**: Erro interno do servidor.
+
+**POST** _/customers_: Cria um novo cliente.
+- **Body**: `(CustomerRequestDTO)`:
+  ```json
+  {
+    "name": "String",
+    "email": "String",
+    "phone": "String",
+    "cellPhone": "String",
+    "zipCode": "String",
+    "address": "String",
+    "addressNumber": "String",
+    "neighborhood": "String",
+    "city": "String",
+    "state": "String",
+    "complement": "String"
+  }
   ```
 - **201 Created**: Cliente criado com sucesso.
 - **400 Bad Request**: Requisição inválida.
