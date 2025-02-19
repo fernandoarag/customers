@@ -27,7 +27,7 @@ spring:
     add-properties: false
 # Spring Doc
 springdoc:
-  packages-to-scan: br.com.fiap.postech.customermanagementapi.interfaces.rest
+  packages-to-scan: br.com.fiap.postech.customermanagement.interfaces.rest
   api-docs:
     enabled: true
 # Logging
