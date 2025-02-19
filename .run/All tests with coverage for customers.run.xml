@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="All tests with coverage for customers" type="JUnit" factoryName="JUnit">
-    <module name="customers" />
+    <module name="customermanagement" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="br.com.fiap.postech.customermanagement.infrastructure.entity.CustomerEntity_" />

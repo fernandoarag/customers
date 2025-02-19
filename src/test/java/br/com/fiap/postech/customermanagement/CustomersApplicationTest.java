@@ -12,6 +12,7 @@ class CustomersApplicationTest {
 
     @Test
     void main_runsSpringApplication() {
-        assertDoesNotThrow(() -> CustomersApplication.main(new String[]{}));
+        String[] args = {"--server.port=9999"};
+        assertDoesNotThrow(() -> CustomersApplication.main(args));
     }
 }

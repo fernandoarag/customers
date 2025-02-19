@@ -7,8 +7,8 @@ import lombok.*;
 /**
  * Entity class representing a customer.
  */
-@Entity(name = "Customers")
-@Table(name = "CUSTOMERS")
+@Entity
+@Table(name = "TB_CUSTOMERS")
 @Getter
 @Setter
 @NoArgsConstructor
