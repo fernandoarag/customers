@@ -1,20 +1,26 @@
-# Usa uma imagem do OpenJDK 21 como base
-FROM openjdk:21-jdk-slim
+# Build stage
+# Start with maven:3.8.7-amazoncorretto-21 base image
+FROM maven:3.9.9-amazoncorretto-21 AS build
 
-# Define o diretório de trabalho dentro do container
-# WORKDIR /app
-RUN mkdir /app
+LABEL maintainer="Fernando Aragão <fernandoarag@gmail.com>"
+ARG JAR_NAME="customermanagement-1.0.0.jar"
+
+# copy pom.xml from context into image
+COPY pom.xml /app/
+COPY src /app/src
+RUN mvn -f /app/pom.xml clean package
+
+
+#Run stage
+FROM amazoncorretto:21
 
 # Copia o JAR gerado pelo Gradle/Maven para dentro do container
-COPY target/*.jar myapp.jar
-
-RUN mkdir /h2-data
-COPY h2-data/ /h2-data/
+COPY --from=build /app/target/${JAR_NAME} /app/${JAR_NAME}
 
 # Expõe a porta do Spring Boot
 EXPOSE 8080
 
 # Comando para rodar a aplicação
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/customermanagement-1.0.0.jar"]
 
-CMD java -jar myapp.jar --spring.config.additional-location=file:/src/main/resources/application.yaml
+
