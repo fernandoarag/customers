@@ -22,7 +22,7 @@ Esta API permite o gerenciamento de clientes, incluindo operações de CRUD e ut
 1. **Clonar o Repositório:**
 
 ```bash
-  git clone https://github.com/fernandoarag/tech-challenge-customers.git
+  git clone https://github.com/fernandoarag/customers-api.git
 ```
 
 ### 🚀 Opções de Build e Execução
@@ -33,103 +33,113 @@ Abaixo seguem duas opções de build e execução da aplicação: Dockerfile e M
 Para construir a aplicação utilizando o Docker, execute o seguinte comando no diretório do projeto:
 
 ```bash
-  docker build -t product-management-app .
+  docker compose build
 ```
 
 Após a construção da imagem, você pode executar a aplicação com o comando:
 
 ```bash
-  docker run -p 8080:8080 product-management-app
+  docker run -p 8080:8080 customers-api-app
 ```
-
-## Gerando os Recursos com o OpenAPI Generator
-
-O OpenAPI Generator automatiza a geração de código com base na especificação OpenAPI. Benefícios incluem:
-
-- **Redução de Erros**: O código gerado segue rigorosamente a especificação.
-- **Aceleração do Desenvolvimento**: Controladores e modelos são gerados automaticamente.
-- **Facilidade de Manutenção**: Atualizações na especificação OpenAPI são rapidamente refletidas no código.
-
-2. Gerar os Controladores e Modelos:
-
-Para gerar automaticamente as classes necessárias, execute o seguinte comando Maven:
-
-```bash
-  mvn clean generate-sources
-```
-
-Isso criará os controladores, modelos e outros recursos com base na especificação `openapi.yaml` localizada em `src/main/resources/`.
 
 ## Executando a Aplicação
 
-3. Compilar o Projeto:
+2. Compilar o Projeto:
 
 ```bash
    mvn clean install
 ```
 
-4. Executar a Aplicação:
+3. Executar a Aplicação:
 
 ```bash
    mvn spring-boot:run
 ```
 
-A aplicação estará disponível em http://localhost:8080.
+A aplicação estará disponível em http://localhost:8080/api/customermanagement/v1.
 
 ## Endpoints
 
 ### Gerenciamento de Produtos
 
-**GET** _/products_: Retorna todos os produtos cadastrados.
-- **200 OK**: Lista de produtos.
+**GET** _/customers_: Retorna todos os clientes cadastrados.
+- **Parâmetros**:
+  - **`(CustomerFilter)`**:
+    ```json
+      {
+        "id": "Long",
+        "name": "String",
+        "email": "String",
+        "phone": "String",
+        "cellPhone": "String",
+        "zipCode": "String",
+        "neighborhood": "String",
+        "city": "String",
+        "state": "String"
+      }
+    ```
+- **200 OK**: Lista de clientes.
 - **500 Internal Server Error**: Erro interno do servidor.
 
-**POST** _/products_: Cria um novo produto.
-- **Body**: Objeto `ProductApiModel`.
-- **201 Created**: Produto criado com sucesso.
+**POST** _/customers_: Cria um novo cliente.
+- **Body**: `(CustomerRequestDTO)`:
+  ```json
+    {
+      "name": "String",
+      "email": "String",
+      "phone": "String",
+      "cellPhone": "String",
+      "zipCode": "String",
+      "address": "String",
+      "addressNumber": "String",
+      "neighborhood": "String",
+      "city": "String",
+      "state": "String",
+      "complement": "String"
+    }
+  ```
+- **201 Created**: Cliente criado com sucesso.
 - **400 Bad Request**: Requisição inválida.
 - **500 Internal Server Error**: Erro interno do servidor.
 
-**GET** _/products/{id}_: Retorna um produto pelo ID.
-- **Parâmetro**: `id` (integer, obrigatório)
-- **200 OK**: Objeto `ProductApiModel`.
-- **404 Not Found**: Produto não encontrado.
-- **500 Internal Server Error**: Erro interno do servidor.
-
-**PUT** _/products/{id}_: Atualiza um produto pelo ID.
+**PUT** _/customers/{id}_: Atualiza um cliente pelo ID.
 - **Parâmetros**:
     - **Path**: `id` (integer, obrigatório)
-    - **Body**: Objeto `ProductApiModel`.
-- **200 OK**: Produto atualizado com sucesso.
+    - **Body**: Objeto `CustomerUpdateRequestDTO`:
+      ```json
+      {
+        "name": "String",
+        "phone": "String",
+        "cellPhone": "String",
+        "zipCode": "String",
+        "address": "String",
+        "addressNumber": "String",
+        "neighborhood": "String",
+        "city": "String",
+        "state": "String",
+        "complement": "String"
+      }
+      ```
+- **200 OK**: Cliente atualizado com sucesso.
 - **400 Bad Request**: Requisição inválida.
-- **404 Not Found**: Produto não encontrado.
+- **404 Not Found**: Cliente não encontrado.
 - **500 Internal Server Error**: Erro interno do servidor.
 
-**DELETE** _/products/{id}_: Remove um produto.
+**DELETE BY ID** _/customers/id/{id}_: Remove um cliente pela ID.
 - **Parâmetro**: `id` (integer, obrigatório)
-- **204 No Content**: Produto removido com sucesso.
-- **404 Not Found**: Produto não encontrado.
+- **204 No Content**: Cliente removido com sucesso.
+- **404 Not Found**: Cliente não encontrado.
 - **500 Internal Server Error**: Erro interno do servidor.
 
-### Upload de Arquivo CSV
-
-**POST** _/product-uploads_
-- **Parâmetro**: Arquivo CSV contendo os produtos.
-- **201 Created**: Produtos criados com sucesso.
-- **400 Bad Request**: Arquivo inválido.
-- **500 Internal Server Error**: Erro interno do servidor.
-
-## Execução do Job Batch
-
-**POST** _/product-uploads_
-- **Descrição**: Adiciona novos produtos ao sistema a partir de um arquivo CSV.
-- **201 Created**: Produtos criados com sucesso.
-- **400 Bad Request**: Arquivo inválido.
+**DELETE BY EMAIL** _/customers/email/{email}_: Remove um cliente pelo email.
+- **Parâmetro**: `email` (string, obrigatório)
+- **204 No Content**: Cliente removido com sucesso.
+- **404 Not Found**: Cliente não encontrado.
 - **500 Internal Server Error**: Erro interno do servidor.
 
 ## Documentação OpenAPI
-A documentação da API pode ser acessada em:
+A documentação da API pode ser acessada, após inciar o servidor, em:
 
 ```bash
-  http://localhost:8080/swagger-ui/index.html
+  http://localhost:8080/api/customermanagement/v1/swagger-ui/index.html
 ```
